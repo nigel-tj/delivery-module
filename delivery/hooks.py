@@ -1,4 +1,7 @@
+from __future__ import unicode_literals
+import frappe
 from . import __version__ as app_version
+
 
 app_name = "delivery"
 app_title = "Delivery"
@@ -6,6 +9,22 @@ app_publisher = "Nigel Jena"
 app_description = "Shows delivery trips to clients and drivers"
 app_email = "nigel@stokdirect.africa"
 app_license = "MIT"
+
+
+#Update driver's location
+@frappe.whitelist()
+def update_driver_location(driver, latitude, longitude):
+    """Update the driver's location"""
+
+    # Get the driver record
+    driver_record = frappe.get_doc("Driver", driver)
+
+    # Update the driver's location
+    driver_record.set('driver_location', {'latitude': latitude, 'longitude': longitude})
+    driver_record.save()
+
+    # Return a success message
+
 
 # Includes in <head>
 # ------------------
